@@ -31,6 +31,7 @@
 		public void AddPoints(int points)
 		{
 			Score += points;
+			Board.RemoveFields(points);
 		}
 	}
 }

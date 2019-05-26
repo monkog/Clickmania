@@ -50,11 +50,12 @@ namespace Clickmania
 		}
 
 		/// <summary>
-		/// Removes the field.
+		/// Removes the given number of field.
 		/// </summary>
-		public void RemoveField()
+		/// <param name="fieldNumber">Number of fields to remove.</param>
+		public void RemoveFields(int fieldNumber)
 		{
-			_fieldsToRemove--;
+			_fieldsToRemove -= fieldNumber;
 		}
 	}
 }

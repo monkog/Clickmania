@@ -86,7 +86,6 @@ namespace Clickmania
 					{
 						int[] tab = _indexes[i];
 						GameBoard.GetControlFromPosition(tab[0], tab[1]).BackColor = SystemColors.Control;
-						_game.Board.RemoveField();
 					}
 
 					for (int i = GameBoard.RowCount - 1; i > 0; i--)
@@ -135,26 +134,40 @@ namespace Clickmania
 
 		private void RemoveFieldInEasyVersion(int row, int column)
 		{
-			for (int i = row; i > 0; i--)
+			RemoveControlsInColumn(column, row);
+			UpdateHighScoreList();
+			CheckIsGameOver();
+		}
+
+		private void RemoveControlsInColumn(int column, params int[] rows)
+		{
+			var orderedRows = rows.OrderBy(r => r);
+
+			foreach (var row in orderedRows)
 			{
-				Control con1 = GameBoard.GetControlFromPosition(column, i);
-				Control con2 = GameBoard.GetControlFromPosition(column, i - 1);
-				con1.BackColor = con2.BackColor;
+				for (var i = row; i > 0; i--)
+				{
+					var currentControl = GameBoard.GetControlFromPosition(column, i);
+					var previousControl = GameBoard.GetControlFromPosition(column, i - 1);
+					currentControl.BackColor = previousControl.BackColor;
+				}
+
+				var control = GameBoard.GetControlFromPosition(column, 0);
+				control.BackColor = SystemColors.Control;
 			}
 
-			Control con = GameBoard.GetControlFromPosition(column, 0);
-			con.BackColor = SystemColors.Control;
-			_game.Board.RemoveField();
-			_game.AddPoints(1);
+			_game.AddPoints(rows.Length);
+		}
+
+		private void UpdateHighScoreList()
+		{
 			HighScoreList.Items.Clear();
 
-			ListViewItem lvi1 = new ListViewItem(string.Format(Properties.Resources.CurrentScore, _game.Score));
-			HighScoreList.Items.Add(lvi1);
+			var currentScore = new ListViewItem(string.Format(Properties.Resources.CurrentScore, _game.Score));
+			HighScoreList.Items.Add(currentScore);
 
 			var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
 			HighScoreList.Items.AddRange(highScores.ToArray());
-
-			CheckIsGameOver();
 		}
 
 		private void Check(int x, int y, Color c)
