@@ -9,26 +9,30 @@ namespace Clickmania
 
 		private readonly Random _random = new Random();
 
+		private bool[,] _board;
+
 		/// <summary>
 		/// Gets the number of columns.
 		/// </summary>
-		public int Width { get; }
+		public int Columns { get; }
 
 		/// <summary>
 		/// Gets the number of rows.
 		/// </summary>
-		public int Height { get; }
+		public int Rows { get; }
 
 		/// <summary>
 		/// Gets the number of different colors used in the game.
 		/// </summary>
 		public int ColorNumber { get; }
 
-		public Board(int width, int height, int colorNumber)
+		public Board(int columns, int rows, int colorNumber)
 		{
-			Width = width;
-			Height = height;
+			Columns = columns;
+			Rows = rows;
 			ColorNumber = colorNumber;
+
+			_board = new bool[Columns, Rows];
 		}
 
 		/// <summary>

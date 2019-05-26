@@ -33,18 +33,18 @@ namespace Clickmania
 			GameBoard.ColumnStyles.Clear();
 			GameBoard.RowStyles.Clear();
 			GameBoard.AutoSize = true;
-			GameBoard.ColumnCount = _game.Board.Width;
-			GameBoard.RowCount = _game.Board.Height;
-			_visited = new bool[_game.Board.Width, _game.Board.Height];
+			GameBoard.ColumnCount = _game.Board.Columns;
+			GameBoard.RowCount = _game.Board.Rows;
+			_visited = new bool[_game.Board.Columns, _game.Board.Rows];
 
-			for (int i = 0; i < _game.Board.Width; i++)
-				for (int j = 0; j < _game.Board.Height; j++)
+			for (int i = 0; i < _game.Board.Columns; i++)
+				for (int j = 0; j < _game.Board.Rows; j++)
 					_visited[i, j] = false;
 
 			for (int i = 0; i < GameBoard.RowCount; ++i)
 			{
-				GameBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _game.Board.Height));
-				GameBoard.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _game.Board.Width));
+				GameBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _game.Board.Rows));
+				GameBoard.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _game.Board.Columns));
 
 				for (int j = 0; j < GameBoard.ColumnCount; ++j)
 				{
@@ -54,7 +54,7 @@ namespace Clickmania
 						Margin = new Padding(0),
 						SizeMode = PictureBoxSizeMode.Zoom,
 						Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-						ClientSize = new Size(GameBoard.Size.Width / _game.Board.Width, GameBoard.Size.Height / _game.Board.Height)
+						ClientSize = new Size(GameBoard.Size.Width / _game.Board.Columns, GameBoard.Size.Height / _game.Board.Rows)
 					};
 					pctrCard.Click += pctrCard_Click;
 
@@ -66,8 +66,8 @@ namespace Clickmania
 		private void pctrCard_Click(object sender, EventArgs e)
 		{
 			var control = sender as Control;
-			var row = control.TabIndex / _game.Board.Width;
-			var column = control.TabIndex % _game.Board.Width;
+			var row = control.TabIndex / _game.Board.Columns;
+			var column = control.TabIndex % _game.Board.Columns;
 
 			if (_game.IsEasyVersion && control.BackColor != SystemColors.Control)
 			{
@@ -139,8 +139,8 @@ namespace Clickmania
 						}
 					}
 					_indexes.Clear();
-					for (int i = 0; i < _game.Board.Width; i++)
-						for (int j = 0; j < _game.Board.Height; j++)
+					for (int i = 0; i < _game.Board.Columns; i++)
+						for (int j = 0; j < _game.Board.Rows; j++)
 							_visited[i, j] = false;
 				}
 
@@ -195,7 +195,7 @@ namespace Clickmania
 
 		private void ChangeColorNumber(object sender, EventArgs e)
 		{
-			StartGame(_game.Board.Width, _game.Board.Height, trackBar.Value);
+			StartGame(_game.Board.Columns, _game.Board.Rows, trackBar.Value);
 		}
 
 		private void Start5X5Game(object sender, EventArgs e)

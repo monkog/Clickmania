@@ -15,8 +15,8 @@ namespace ClickmaniaTests
 
 			var unitUnderTest = new Board(width, height, colorNumber);
 
-			Assert.AreEqual(width, unitUnderTest.Width);
-			Assert.AreEqual(height, unitUnderTest.Height);
+			Assert.AreEqual(width, unitUnderTest.Columns);
+			Assert.AreEqual(height, unitUnderTest.Rows);
 			Assert.AreEqual(colorNumber, unitUnderTest.ColorNumber);
 		}
 	}

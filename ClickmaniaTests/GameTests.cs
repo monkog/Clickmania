@@ -39,8 +39,8 @@ namespace ClickmaniaTests
 			var unitUnderTest = new Game(width, height, colorNumber, isEasyVersion);
 
 			Assert.IsNotNull(unitUnderTest.Board);
-			Assert.AreEqual(width, unitUnderTest.Board.Width);
-			Assert.AreEqual(height, unitUnderTest.Board.Height);
+			Assert.AreEqual(width, unitUnderTest.Board.Columns);
+			Assert.AreEqual(height, unitUnderTest.Board.Rows);
 			Assert.AreEqual(colorNumber, unitUnderTest.Board.ColorNumber);
 		}
 
