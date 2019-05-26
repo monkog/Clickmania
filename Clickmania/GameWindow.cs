@@ -37,23 +37,21 @@ namespace Clickmania
 			GameBoard.RowCount = _game.Board.Rows;
 			_visited = new bool[_game.Board.Columns, _game.Board.Rows];
 
-			for (int i = 0; i < GameBoard.RowCount; ++i)
+			for (var i = 0; i < GameBoard.RowCount; ++i)
 			{
 				GameBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _game.Board.Rows));
 				GameBoard.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _game.Board.Columns));
 
-				for (int j = 0; j < GameBoard.ColumnCount; ++j)
+				for (var j = 0; j < GameBoard.ColumnCount; ++j)
 				{
 					var field = new PictureBox
 					{
 						BackColor = _game.Board.GetColor(),
 						Margin = new Padding(0),
-						SizeMode = PictureBoxSizeMode.Zoom,
-						Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-						ClientSize = new Size(GameBoard.Size.Width / _game.Board.Columns, GameBoard.Size.Height / _game.Board.Rows)
+						Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right
 					};
-					field.Click += RemoveField;
 
+					field.Click += RemoveField;
 					GameBoard.Controls.Add(field);
 				}
 			}
