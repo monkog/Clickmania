@@ -9,7 +9,6 @@ namespace Clickmania
 	public partial class GameWindow : Form
 	{
 		private Game _game;
-		private int _score;
 		private readonly List<int[]> _indexes = new List<int[]>();
 		private bool[,] _visited;
 
@@ -25,13 +24,10 @@ namespace Clickmania
 
 		private void StartGame(int width, int height, int colorNumber)
 		{
-			_game = new Game(width, height, colorNumber, true);
+			if (_game != null && _game.Score != 0)
+				HighScoreRegistry.AddHighScore(_game.Score, GameBoard.RowCount * GameBoard.ColumnCount);
 
-			if (_score != 0)
-			{
-				HighScoreRegistry.AddHighScore(_score, GameBoard.RowCount * GameBoard.ColumnCount);
-				_score = 0;
-			}
+			_game = new Game(width, height, colorNumber, true);
 
 			GameBoard.Controls.Clear();
 			GameBoard.ColumnStyles.Clear();
@@ -84,10 +80,10 @@ namespace Clickmania
 
 				Control con = GameBoard.GetControlFromPosition(column, 0);
 				con.BackColor = SystemColors.Control;
-				_score++;
+				_game.AddPoints(1);
 				HighScoreList.Items.Clear();
 
-				ListViewItem lvi1 = new ListViewItem("Current: " + _score);
+				ListViewItem lvi1 = new ListViewItem("Current: " + _game.Score);
 				HighScoreList.Items.Add(lvi1);
 
 				var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
@@ -130,11 +126,11 @@ namespace Clickmania
 						}
 						if (_indexes.Count > 1)
 						{
-							_score = _score + _indexes.Count;
+							_game.AddPoints(_indexes.Count);
 
 							HighScoreList.Items.Clear();
 
-							ListViewItem lvi1 = new ListViewItem("Current: " + _score);
+							ListViewItem lvi1 = new ListViewItem("Current: " + _game.Score);
 							HighScoreList.Items.Add(lvi1);
 
 							var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
