@@ -9,17 +9,17 @@ namespace Clickmania
 	{
 		private Board _board;
 		private int _score;
-		private readonly List<int[]> _indexes;
-		private readonly List<string> _scoreList;
+		private readonly List<int[]> _indexes = new List<int[]>();
+		private readonly List<string> _scoreList = new List<string>();
 		private bool[,] _visited;
 
 		public GameWindow()
 		{
 			InitializeComponent();
-			_indexes = new List<int[]>();
-			_scoreList = new List<string>();
-			HighScoreList.Visible = false;
-			GameBoard.Width = Width;
+		}
+
+		private void InitializeGame(object sender, EventArgs e)
+		{
 			StartGame(5, 5, 5);
 		}
 

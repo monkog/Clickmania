@@ -58,7 +58,7 @@
 			this.GameBoard.RowCount = 2;
 			this.GameBoard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.GameBoard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.GameBoard.Size = new System.Drawing.Size(294, 192);
+			this.GameBoard.Size = new System.Drawing.Size(418, 192);
 			this.GameBoard.TabIndex = 0;
 			// 
 			// menuStrip1
@@ -85,28 +85,28 @@
 			// x5ToolStripMenuItem
 			// 
 			this.x5ToolStripMenuItem.Name = "x5ToolStripMenuItem";
-			this.x5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.x5ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
 			this.x5ToolStripMenuItem.Text = "5 x 5 ";
 			this.x5ToolStripMenuItem.Click += new System.EventHandler(this.Start5X5Game);
 			// 
 			// x10ToolStripMenuItem
 			// 
 			this.x10ToolStripMenuItem.Name = "x10ToolStripMenuItem";
-			this.x10ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.x10ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
 			this.x10ToolStripMenuItem.Text = "10  x 10";
 			this.x10ToolStripMenuItem.Click += new System.EventHandler(this.Start10X10Game);
 			// 
 			// x10ToolStripMenuItem1
 			// 
 			this.x10ToolStripMenuItem1.Name = "x10ToolStripMenuItem1";
-			this.x10ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.x10ToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
 			this.x10ToolStripMenuItem1.Text = "5  x 10 ";
 			this.x10ToolStripMenuItem1.Click += new System.EventHandler(this.Start5X10Game);
 			// 
 			// x5ToolStripMenuItem1
 			// 
 			this.x5ToolStripMenuItem1.Name = "x5ToolStripMenuItem1";
-			this.x5ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.x5ToolStripMenuItem1.Size = new System.Drawing.Size(112, 22);
 			this.x5ToolStripMenuItem1.Text = "10 x 5 ";
 			this.x5ToolStripMenuItem1.Click += new System.EventHandler(this.Start10X5Game);
 			// 
@@ -158,6 +158,7 @@
 			this.HighScoreList.Size = new System.Drawing.Size(121, 192);
 			this.HighScoreList.TabIndex = 5;
 			this.HighScoreList.UseCompatibleStateImageBehavior = false;
+			this.HighScoreList.Visible = false;
 			// 
 			// GameWindow
 			// 
@@ -174,6 +175,7 @@
 			this.MinimumSize = new System.Drawing.Size(300, 300);
 			this.Name = "GameWindow";
 			this.Text = "Clickmania";
+			this.Load += new System.EventHandler(this.InitializeGame);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar)).EndInit();
