@@ -6,6 +6,14 @@ namespace ClickmaniaTests
 	[TestFixture]
 	public class BoardTests
 	{
+		private Board _unitUnderTest;
+
+		[SetUp]
+		public void Initialize()
+		{
+			_unitUnderTest = new Board(1, 2, 3);
+		}
+
 		[Test]
 		public void Ctor_ValidParams_PropertiesAssigned()
 		{
@@ -18,6 +26,21 @@ namespace ClickmaniaTests
 			Assert.AreEqual(width, unitUnderTest.Columns);
 			Assert.AreEqual(height, unitUnderTest.Rows);
 			Assert.AreEqual(colorNumber, unitUnderTest.ColorNumber);
+		}
+
+		[Test]
+		public void AreAllFieldsRemoved_InitialObject_False()
+		{
+			Assert.IsFalse(_unitUnderTest.AllFieldsRemoved);
+		}
+
+		[Test]
+		public void RemoveField_AllFields_AllFieldsRemoved()
+		{
+			_unitUnderTest.RemoveField();
+			_unitUnderTest.RemoveField();
+
+			Assert.IsTrue(_unitUnderTest.AllFieldsRemoved);
 		}
 	}
 }

@@ -59,5 +59,14 @@ namespace Clickmania.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congratulations! You won!.
+        /// </summary>
+        internal static string GameWon {
+            get {
+                return ResourceManager.GetString("GameWon", resourceCulture);
+            }
+        }
     }
 }

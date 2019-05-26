@@ -80,6 +80,7 @@ namespace Clickmania
 
 				Control con = GameBoard.GetControlFromPosition(column, 0);
 				con.BackColor = SystemColors.Control;
+				_game.Board.RemoveField();
 				_game.AddPoints(1);
 				HighScoreList.Items.Clear();
 
@@ -89,7 +90,7 @@ namespace Clickmania
 				var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
 				HighScoreList.Items.AddRange(highScores.ToArray());
 
-				Game_Over();
+				CheckIsGameOver();
 			}
 			else
 			{
@@ -104,6 +105,7 @@ namespace Clickmania
 						{
 							int[] tab = _indexes[i];
 							GameBoard.GetControlFromPosition(tab[0], tab[1]).BackColor = SystemColors.Control;
+							_game.Board.RemoveField();
 						}
 						for (int i = GameBoard.RowCount - 1; i > 0; i--)
 						{
@@ -144,7 +146,7 @@ namespace Clickmania
 							_visited[i, j] = false;
 				}
 
-				Game_Over();
+				CheckIsGameOver();
 			}
 		}
 
@@ -169,14 +171,10 @@ namespace Clickmania
 			}
 		}
 
-		private void Game_Over()
+		private void CheckIsGameOver()
 		{
-			foreach (Control c in GameBoard.Controls)
-			{
-				if (c.BackColor != SystemColors.Control)
-					return;
-			}
-			MessageBox.Show("Congratulations! You won!");
+			if (_game.Board.AllFieldsRemoved)
+				MessageBox.Show(Properties.Resources.GameWon);
 		}
 
 		private void ChooseEasyVersion(object sender, EventArgs e)

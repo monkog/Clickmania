@@ -9,7 +9,7 @@ namespace Clickmania
 
 		private readonly Random _random = new Random();
 
-		private bool[,] _board;
+		private int _fieldsToRemove;
 
 		/// <summary>
 		/// Gets the number of columns.
@@ -26,13 +26,18 @@ namespace Clickmania
 		/// </summary>
 		public int ColorNumber { get; }
 
+		/// <summary>
+		/// Gets a value determining whether all fields were removed.
+		/// </summary>
+		public bool AllFieldsRemoved => _fieldsToRemove == 0;
+
 		public Board(int columns, int rows, int colorNumber)
 		{
 			Columns = columns;
 			Rows = rows;
 			ColorNumber = colorNumber;
 
-			_board = new bool[Columns, Rows];
+			_fieldsToRemove = Columns * Rows;
 		}
 
 		/// <summary>
@@ -42,6 +47,14 @@ namespace Clickmania
 		public Color GetColor()
 		{
 			return _colorTab[_random.Next() % ColorNumber];
+		}
+
+		/// <summary>
+		/// Removes the field.
+		/// </summary>
+		public void RemoveField()
+		{
+			_fieldsToRemove--;
 		}
 	}
 }
