@@ -69,64 +69,31 @@ namespace Clickmania
 			}
 			else
 			{
-				RemoveFieldInHardVersion(column, row, control);
+				RemoveFieldInHardVersion(column, row);
 			}
 		}
 
-		private void RemoveFieldInHardVersion(int column, int row, Control control)
+		private void RemoveFieldInHardVersion(int c, int row)
 		{
-			Control con = GameBoard.GetControlFromPosition(column, row);
+			var currentControl = GameBoard.GetControlFromPosition(c, row);
 
-			if (con.BackColor != SystemColors.Control)
+			if (currentControl.BackColor != SystemColors.Control)
 			{
-				Check(column, row, control.BackColor);
+				Check(c, row, currentControl.BackColor);
+
 				if (_indexes.Count > 1)
 				{
-					for (int i = 0; i < _indexes.Count; i++)
+					var columns = _indexes.GroupBy(i => i[0], i => i[1]);
+					foreach (var column in columns)
 					{
-						int[] tab = _indexes[i];
-						GameBoard.GetControlFromPosition(tab[0], tab[1]).BackColor = SystemColors.Control;
+						RemoveControlsInColumn(column.Key, column.ToArray());
 					}
 
-					for (int i = GameBoard.RowCount - 1; i > 0; i--)
-					{
-						for (int j = 0; j < GameBoard.ColumnCount; j++)
-							if (GameBoard.GetControlFromPosition(j, i).BackColor == SystemColors.Control)
-							{
-								bool exists = false;
-								for (int k = i - 1; k >= 0; k--)
-									if (GameBoard.GetControlFromPosition(j, k).BackColor != SystemColors.Control)
-										exists = true;
-
-								if (exists)
-									while (GameBoard.GetControlFromPosition(j, i).BackColor == SystemColors.Control)
-									{
-										for (int k = i - 1; k >= 0; k--)
-											GameBoard.GetControlFromPosition(j, k + 1).BackColor =
-												GameBoard.GetControlFromPosition(j, k).BackColor;
-										GameBoard.GetControlFromPosition(j, 0).BackColor = SystemColors.Control;
-									}
-							}
-					}
-
-					if (_indexes.Count > 1)
-					{
-						_game.AddPoints(_indexes.Count);
-
-						HighScoreList.Items.Clear();
-						
-						ListViewItem lvi1 = new ListViewItem(string.Format(Properties.Resources.CurrentScore, _game.Score));
-						HighScoreList.Items.Add(lvi1);
-
-						var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
-						HighScoreList.Items.AddRange(highScores.ToArray());
-					}
+					UpdateHighScoreList();
 				}
 
 				_indexes.Clear();
-				for (int i = 0; i < _game.Board.Columns; i++)
-				for (int j = 0; j < _game.Board.Rows; j++)
-					_visited[i, j] = false;
+				_visited = new bool[_game.Board.Columns, _game.Board.Rows];
 			}
 
 			CheckIsGameOver();
