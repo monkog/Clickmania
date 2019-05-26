@@ -54,7 +54,6 @@ namespace Clickmania
 				{
 					var pctrCard = new PictureBox
 					{
-						Tag = new Point(j, i),
 						BackColor = _board.GetColor(),
 						Margin = new Padding(0),
 						SizeMode = PictureBoxSizeMode.Zoom,
@@ -68,21 +67,22 @@ namespace Clickmania
 			}
 		}
 
-		private void pctrCard_Click(Object sender, EventArgs e)
+		private void pctrCard_Click(object sender, EventArgs e)
 		{
-			Control c = sender as Control;
-			Point p = (Point)c.Tag;
+			var control = sender as Control;
+			var row = control.TabIndex / _board.Width;
+			var column = control.TabIndex % _board.Width;
 
-			if (radioButtonC.Checked && c.BackColor != SystemColors.Control)
+			if (radioButtonC.Checked && control.BackColor != SystemColors.Control)
 			{
-				for (int i = p.Y; i > 0; i--)
+				for (int i = row; i > 0; i--)
 				{
-					Control con1 = GameBoard.GetControlFromPosition(p.X, i);
-					Control con2 = GameBoard.GetControlFromPosition(p.X, i - 1);
+					Control con1 = GameBoard.GetControlFromPosition(column, i);
+					Control con2 = GameBoard.GetControlFromPosition(column, i - 1);
 					con1.BackColor = con2.BackColor;
 				}
 
-				Control con = GameBoard.GetControlFromPosition(p.X, 0);
+				Control con = GameBoard.GetControlFromPosition(column, 0);
 				con.BackColor = SystemColors.Control;
 				_score++;
 				HighScoreList.Items.Clear();
@@ -97,11 +97,11 @@ namespace Clickmania
 			}
 			else
 			{
-				Control con = GameBoard.GetControlFromPosition(p.X, p.Y);
+				Control con = GameBoard.GetControlFromPosition(column, row);
 
 				if (con.BackColor != SystemColors.Control)
 				{
-					Check(p.X, p.Y, c.BackColor);
+					Check(column, row, control.BackColor);
 					if (_indexes.Count > 1)
 					{
 						for (int i = 0; i < _indexes.Count; i++)
