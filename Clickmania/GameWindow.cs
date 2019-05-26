@@ -8,7 +8,7 @@ namespace Clickmania
 {
 	public partial class GameWindow : Form
 	{
-		private Board _board;
+		private Game _game;
 		private int _score;
 		private readonly List<int[]> _indexes = new List<int[]>();
 		private bool[,] _visited;
@@ -25,7 +25,7 @@ namespace Clickmania
 
 		private void StartGame(int width, int height, int colorNumber)
 		{
-			_board = new Board(width, height, colorNumber);
+			_game = new Game(width, height, colorNumber, true);
 
 			if (_score != 0)
 			{
@@ -37,28 +37,28 @@ namespace Clickmania
 			GameBoard.ColumnStyles.Clear();
 			GameBoard.RowStyles.Clear();
 			GameBoard.AutoSize = true;
-			GameBoard.ColumnCount = _board.Width;
-			GameBoard.RowCount = _board.Height;
-			_visited = new bool[_board.Width, _board.Height];
+			GameBoard.ColumnCount = _game.Board.Width;
+			GameBoard.RowCount = _game.Board.Height;
+			_visited = new bool[_game.Board.Width, _game.Board.Height];
 
-			for (int i = 0; i < _board.Width; i++)
-				for (int j = 0; j < _board.Height; j++)
+			for (int i = 0; i < _game.Board.Width; i++)
+				for (int j = 0; j < _game.Board.Height; j++)
 					_visited[i, j] = false;
 
 			for (int i = 0; i < GameBoard.RowCount; ++i)
 			{
-				GameBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _board.Height));
-				GameBoard.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _board.Width));
+				GameBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _game.Board.Height));
+				GameBoard.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _game.Board.Width));
 
 				for (int j = 0; j < GameBoard.ColumnCount; ++j)
 				{
 					var pctrCard = new PictureBox
 					{
-						BackColor = _board.GetColor(),
+						BackColor = _game.Board.GetColor(),
 						Margin = new Padding(0),
 						SizeMode = PictureBoxSizeMode.Zoom,
 						Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-						ClientSize = new Size(GameBoard.Size.Width / _board.Width, GameBoard.Size.Height / _board.Height)
+						ClientSize = new Size(GameBoard.Size.Width / _game.Board.Width, GameBoard.Size.Height / _game.Board.Height)
 					};
 					pctrCard.Click += pctrCard_Click;
 
@@ -70,10 +70,10 @@ namespace Clickmania
 		private void pctrCard_Click(object sender, EventArgs e)
 		{
 			var control = sender as Control;
-			var row = control.TabIndex / _board.Width;
-			var column = control.TabIndex % _board.Width;
+			var row = control.TabIndex / _game.Board.Width;
+			var column = control.TabIndex % _game.Board.Width;
 
-			if (radioButtonC.Checked && control.BackColor != SystemColors.Control)
+			if (_game.IsEasyVersion && control.BackColor != SystemColors.Control)
 			{
 				for (int i = row; i > 0; i--)
 				{
@@ -143,8 +143,8 @@ namespace Clickmania
 						}
 					}
 					_indexes.Clear();
-					for (int i = 0; i < _board.Width; i++)
-						for (int j = 0; j < _board.Height; j++)
+					for (int i = 0; i < _game.Board.Width; i++)
+						for (int j = 0; j < _game.Board.Height; j++)
 							_visited[i, j] = false;
 				}
 
@@ -183,41 +183,43 @@ namespace Clickmania
 			MessageBox.Show("Congratulations! You won!");
 		}
 
-		private void ChooseClassVersion(object sender, EventArgs e)
+		private void ChooseEasyVersion(object sender, EventArgs e)
 		{
+			_game.IsEasyVersion = true;
 			HighScoreList.Visible = false;
 			GameBoard.Width = Width;
 		}
 
-		private void ChooseHomeVersion(object sender, EventArgs e)
+		private void ChooseHardVersion(object sender, EventArgs e)
 		{
+			_game.IsEasyVersion = false;
 			HighScoreList.Visible = true;
 			GameBoard.Width = Width - HighScoreList.Width;
 		}
 
 		private void ChangeColorNumber(object sender, EventArgs e)
 		{
-			StartGame(_board.Width, _board.Height, trackBar.Value);
+			StartGame(_game.Board.Width, _game.Board.Height, trackBar.Value);
 		}
 
 		private void Start5X5Game(object sender, EventArgs e)
 		{
-			StartGame(5, 5, _board.ColorNumber);
+			StartGame(5, 5, _game.Board.ColorNumber);
 		}
 
 		private void Start10X10Game(object sender, EventArgs e)
 		{
-			StartGame(10, 10, _board.ColorNumber);
+			StartGame(10, 10, _game.Board.ColorNumber);
 		}
 
 		private void Start5X10Game(object sender, EventArgs e)
 		{
-			StartGame(5, 10, _board.ColorNumber);
+			StartGame(5, 10, _game.Board.ColorNumber);
 		}
 
 		private void Start10X5Game(object sender, EventArgs e)
 		{
-			StartGame(10, 5, _board.ColorNumber);
+			StartGame(10, 5, _game.Board.ColorNumber);
 		}
 	}
 }

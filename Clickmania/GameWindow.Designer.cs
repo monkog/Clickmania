@@ -36,8 +36,8 @@
 			this.x10ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.x5ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.trackBar = new System.Windows.Forms.TrackBar();
-			this.radioButtonC = new System.Windows.Forms.RadioButton();
-			this.radioButtonH = new System.Windows.Forms.RadioButton();
+			this.EasyVersion = new System.Windows.Forms.RadioButton();
+			this.HardVersion = new System.Windows.Forms.RadioButton();
 			this.HighScoreList = new System.Windows.Forms.ListView();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -122,32 +122,32 @@
 			this.trackBar.Value = 5;
 			this.trackBar.ValueChanged += new System.EventHandler(this.ChangeColorNumber);
 			// 
-			// radioButtonC
+			// EasyVersion
 			// 
-			this.radioButtonC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.radioButtonC.AutoSize = true;
-			this.radioButtonC.Checked = true;
-			this.radioButtonC.Location = new System.Drawing.Point(12, 284);
-			this.radioButtonC.Name = "radioButtonC";
-			this.radioButtonC.Size = new System.Drawing.Size(88, 17);
-			this.radioButtonC.TabIndex = 3;
-			this.radioButtonC.TabStop = true;
-			this.radioButtonC.Text = "Class Version";
-			this.radioButtonC.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.radioButtonC.UseVisualStyleBackColor = true;
-			this.radioButtonC.CheckedChanged += new System.EventHandler(this.ChooseClassVersion);
+			this.EasyVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.EasyVersion.AutoSize = true;
+			this.EasyVersion.Checked = true;
+			this.EasyVersion.Location = new System.Drawing.Point(12, 284);
+			this.EasyVersion.Name = "EasyVersion";
+			this.EasyVersion.Size = new System.Drawing.Size(48, 17);
+			this.EasyVersion.TabIndex = 3;
+			this.EasyVersion.TabStop = true;
+			this.EasyVersion.Text = "Easy";
+			this.EasyVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.EasyVersion.UseVisualStyleBackColor = true;
+			this.EasyVersion.CheckedChanged += new System.EventHandler(this.ChooseEasyVersion);
 			// 
-			// radioButtonH
+			// HardVersion
 			// 
-			this.radioButtonH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.radioButtonH.AutoSize = true;
-			this.radioButtonH.Location = new System.Drawing.Point(143, 284);
-			this.radioButtonH.Name = "radioButtonH";
-			this.radioButtonH.Size = new System.Drawing.Size(91, 17);
-			this.radioButtonH.TabIndex = 4;
-			this.radioButtonH.Text = "Home Version";
-			this.radioButtonH.UseVisualStyleBackColor = true;
-			this.radioButtonH.CheckedChanged += new System.EventHandler(this.ChooseHomeVersion);
+			this.HardVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.HardVersion.AutoSize = true;
+			this.HardVersion.Location = new System.Drawing.Point(143, 284);
+			this.HardVersion.Name = "HardVersion";
+			this.HardVersion.Size = new System.Drawing.Size(48, 17);
+			this.HardVersion.TabIndex = 4;
+			this.HardVersion.Text = "Hard";
+			this.HardVersion.UseVisualStyleBackColor = true;
+			this.HardVersion.CheckedChanged += new System.EventHandler(this.ChooseHardVersion);
 			// 
 			// HighScoreList
 			// 
@@ -166,8 +166,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(418, 313);
 			this.Controls.Add(this.HighScoreList);
-			this.Controls.Add(this.radioButtonH);
-			this.Controls.Add(this.radioButtonC);
+			this.Controls.Add(this.HardVersion);
+			this.Controls.Add(this.EasyVersion);
 			this.Controls.Add(this.trackBar);
 			this.Controls.Add(this.GameBoard);
 			this.Controls.Add(this.menuStrip1);
@@ -194,8 +194,8 @@
         private System.Windows.Forms.ToolStripMenuItem x10ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem x5ToolStripMenuItem1;
         private System.Windows.Forms.TrackBar trackBar;
-        private System.Windows.Forms.RadioButton radioButtonC;
-        private System.Windows.Forms.RadioButton radioButtonH;
+        private System.Windows.Forms.RadioButton EasyVersion;
+        private System.Windows.Forms.RadioButton HardVersion;
         private System.Windows.Forms.ListView HighScoreList;
     }
 }
