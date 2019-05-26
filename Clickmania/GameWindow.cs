@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace Clickmania
 {
-    public partial class Form1 : Form
+    public partial class GameWindow : Form
     {
-        int _colorNumber = 5;
-	    readonly Color[] _colorTab = { Color.Blue, Color.Green, Color.Crimson, Color.Cyan, Color.Gray, Color.Indigo, Color.Navy, Color.HotPink, Color.Red, Color.Yellow };
-        int _height = 5;
-        int _width = 5;
-	    int _score = 0;
+	    private int _colorNumber = 5;
+	    private readonly Color[] _colorTab = { Color.Blue, Color.Green, Color.Crimson, Color.Cyan, Color.Gray, Color.Indigo, Color.Navy, Color.HotPink, Color.Red, Color.Yellow };
+	    private int _height = 5;
+	    private int _width = 5;
+	    private int _score;
         private readonly List<int[]> _indexes;
         private readonly List<string> _scoreList;
-        bool[,] _visited;
+        private bool[,] _visited;
 
-        public Form1()
+        public GameWindow()
         {
             InitializeComponent();
             _indexes = new List<int[]>();
             _scoreList = new List<string>();
-            listView.Visible = false;
-            TLP.Width = this.Width;
+            HighScoreList.Visible = false;
+            GameBoard.Width = Width;
             StartGame();
         }
 
@@ -30,16 +30,16 @@ namespace WindowsFormsApplication1
         {
             if (_score != 0)
             {
-                _scoreList.Add(_score + "/" + TLP.RowCount * TLP.ColumnCount);
+                _scoreList.Add(_score + "/" + GameBoard.RowCount * GameBoard.ColumnCount);
                 _score = 0;
             }
 
-            TLP.Controls.Clear();
-            TLP.ColumnStyles.Clear();
-            TLP.RowStyles.Clear();
-            TLP.AutoSize = true;
-            TLP.ColumnCount = _width;
-            TLP.RowCount = _height;
+            GameBoard.Controls.Clear();
+            GameBoard.ColumnStyles.Clear();
+            GameBoard.RowStyles.Clear();
+            GameBoard.AutoSize = true;
+            GameBoard.ColumnCount = _width;
+            GameBoard.RowCount = _height;
             Random rnd = new Random();
             _visited = new bool[_width, _height];
 
@@ -47,12 +47,12 @@ namespace WindowsFormsApplication1
                 for (int j = 0; j < _height; j++)
                     _visited[i, j] = false;
 
-            for (int i = 0; i < TLP.RowCount; ++i)
+            for (int i = 0; i < GameBoard.RowCount; ++i)
             {
-                TLP.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _height));
-                TLP.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _width));
+                GameBoard.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _height));
+                GameBoard.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _width));
 
-                for (int j = 0; j < TLP.ColumnCount; ++j)
+                for (int j = 0; j < GameBoard.ColumnCount; ++j)
                 {
                     var pctrCard = new PictureBox
                     {
@@ -61,11 +61,11 @@ namespace WindowsFormsApplication1
                         Margin = new Padding(0),
                         SizeMode = PictureBoxSizeMode.Zoom,
                         Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                        ClientSize = new Size(TLP.Size.Width / _width, TLP.Size.Height / _height)
+                        ClientSize = new Size(GameBoard.Size.Width / _width, GameBoard.Size.Height / _height)
                     };
                     pctrCard.Click += pctrCard_Click;
 
-                    TLP.Controls.Add(pctrCard);
+                    GameBoard.Controls.Add(pctrCard);
                 }
             }
         }
@@ -79,30 +79,30 @@ namespace WindowsFormsApplication1
             {
                 for (int i = p.Y; i > 0; i--)
                 {
-                    Control con1 = TLP.GetControlFromPosition(p.X, i);
-                    Control con2 = TLP.GetControlFromPosition(p.X, i - 1);
+                    Control con1 = GameBoard.GetControlFromPosition(p.X, i);
+                    Control con2 = GameBoard.GetControlFromPosition(p.X, i - 1);
                     con1.BackColor = con2.BackColor;
                 }
 
-                Control con = TLP.GetControlFromPosition(p.X, 0);
+                Control con = GameBoard.GetControlFromPosition(p.X, 0);
                 con.BackColor = SystemColors.Control;
                 _score++;
-                listView.Items.Clear();
+                HighScoreList.Items.Clear();
 
                 ListViewItem lvi1 = new ListViewItem("Current: " + _score);
-                listView.Items.Add(lvi1);
+                HighScoreList.Items.Add(lvi1);
 
                 for (int i = _scoreList.Count - 1; i >= 0; i--)
                 {
                     ListViewItem lvi = new ListViewItem(_scoreList[i]);
-                    listView.Items.Add(lvi);
+                    HighScoreList.Items.Add(lvi);
                 }
 
                 Game_Over();
             }
             else
             {
-                Control con = TLP.GetControlFromPosition(p.X, p.Y);
+                Control con = GameBoard.GetControlFromPosition(p.X, p.Y);
 
                 if (con.BackColor != SystemColors.Control)
                 {
@@ -112,24 +112,24 @@ namespace WindowsFormsApplication1
                         for (int i = 0; i < _indexes.Count; i++)
                         {
                             int[] tab = _indexes[i];
-                            TLP.GetControlFromPosition(tab[0], tab[1]).BackColor = SystemColors.Control;
+                            GameBoard.GetControlFromPosition(tab[0], tab[1]).BackColor = SystemColors.Control;
                         }
-                        for (int i = TLP.RowCount - 1; i > 0; i--)
+                        for (int i = GameBoard.RowCount - 1; i > 0; i--)
                         {
-                            for (int j = 0; j < TLP.ColumnCount; j++)
-                                if (TLP.GetControlFromPosition(j, i).BackColor == SystemColors.Control)
+                            for (int j = 0; j < GameBoard.ColumnCount; j++)
+                                if (GameBoard.GetControlFromPosition(j, i).BackColor == SystemColors.Control)
                                 {
                                     bool exists = false;
                                     for (int k = i - 1; k >= 0; k--)
-                                        if (TLP.GetControlFromPosition(j, k).BackColor != SystemColors.Control)
+                                        if (GameBoard.GetControlFromPosition(j, k).BackColor != SystemColors.Control)
                                             exists = true;
 
                                     if (exists)
-                                        while (TLP.GetControlFromPosition(j, i).BackColor == SystemColors.Control)
+                                        while (GameBoard.GetControlFromPosition(j, i).BackColor == SystemColors.Control)
                                         {
                                             for (int k = i - 1; k >= 0; k--)
-                                                TLP.GetControlFromPosition(j, k + 1).BackColor = TLP.GetControlFromPosition(j, k).BackColor;
-                                            TLP.GetControlFromPosition(j, 0).BackColor = SystemColors.Control;
+                                                GameBoard.GetControlFromPosition(j, k + 1).BackColor = GameBoard.GetControlFromPosition(j, k).BackColor;
+                                            GameBoard.GetControlFromPosition(j, 0).BackColor = SystemColors.Control;
                                         }
                                 }
                         }
@@ -137,15 +137,15 @@ namespace WindowsFormsApplication1
                         {
                             _score = _score + _indexes.Count;
 
-                            listView.Items.Clear();
+                            HighScoreList.Items.Clear();
 
                             ListViewItem lvi1 = new ListViewItem("Current: " + _score);
-                            listView.Items.Add(lvi1);
+                            HighScoreList.Items.Add(lvi1);
 
                             for (int i = _scoreList.Count - 1; i >= 0; i--)
                             {
                                 ListViewItem lvi = new ListViewItem(_scoreList[i]);
-                                listView.Items.Add(lvi);
+                                HighScoreList.Items.Add(lvi);
                             }
 
                         }
@@ -162,7 +162,7 @@ namespace WindowsFormsApplication1
 
         private void Check(int x, int y, Color c)
         {
-            Control con2 = TLP.GetControlFromPosition(x, y);
+            Control con2 = GameBoard.GetControlFromPosition(x, y);
             if (c == con2.BackColor)
             {
                 _visited[x, y] = true;
@@ -174,16 +174,16 @@ namespace WindowsFormsApplication1
                     Check(x - 1, y, c);
                 if (y > 0 && _visited[x, y - 1] == false)
                     Check(x, y - 1, c);
-                if (x < TLP.ColumnCount - 1 && _visited[x + 1, y] == false)
+                if (x < GameBoard.ColumnCount - 1 && _visited[x + 1, y] == false)
                     Check(x + 1, y, c);
-                if (y < TLP.RowCount - 1 && _visited[x, y + 1] == false)
+                if (y < GameBoard.RowCount - 1 && _visited[x, y + 1] == false)
                     Check(x, y + 1, c);
             }
         }
 
         private void Game_Over()
         {
-            foreach (Control c in TLP.Controls)
+            foreach (Control c in GameBoard.Controls)
             {
                 if (c.BackColor != SystemColors.Control)
                     return;
@@ -191,50 +191,50 @@ namespace WindowsFormsApplication1
             MessageBox.Show("Congratulations! You won!");
         }
 
-        private void x5ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void ChooseClassVersion(object sender, EventArgs e)
+		{
+            HighScoreList.Visible = false;
+            GameBoard.Width = Width;
+		}
+
+		private void ChooseHomeVersion(object sender, EventArgs e)
+		{
+			HighScoreList.Visible = true;
+			GameBoard.Width = Width - HighScoreList.Width;
+		}
+
+		private void ChangeColorNumber(object sender, EventArgs e)
+		{
+			_colorNumber = trackBar.Value;
+			StartGame();
+		}
+
+		private void Start5X5Game(object sender, EventArgs e)
+		{
             _width = 5;
             _height = 5;
             StartGame();
-        }
+		}
 
-        private void trackBar_ValueChanged(object sender, EventArgs e)
-        {
-            _colorNumber = trackBar.Value;
-            StartGame();
-        }
-
-        private void x10ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void Start10X10Game(object sender, EventArgs e)
+		{
             _width = 10;
             _height = 10;
             StartGame();
-        }
+		}
 
-        private void x10ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
+		private void Start5X10Game(object sender, EventArgs e)
+		{
             _width = 5;
             _height = 10;
             StartGame();
-        }
+		}
 
-        private void x5ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            _width = 10;
-            _height = 5;
-            StartGame();
-        }
-
-        private void radioButtonH_CheckedChanged(object sender, EventArgs e)
-        {
-            listView.Visible = true;
-            TLP.Width = Width - listView.Width;
-        }
-
-        private void radioButtonC_CheckedChanged(object sender, EventArgs e)
-        {
-            listView.Visible = false;
-            TLP.Width = Width;
-        }
-    }
+		private void Start10X5Game(object sender, EventArgs e)
+		{
+			_width = 10;
+			_height = 5;
+			StartGame();
+		}
+	}
 }
