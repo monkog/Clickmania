@@ -115,8 +115,8 @@ namespace Clickmania
 						_game.AddPoints(_indexes.Count);
 
 						HighScoreList.Items.Clear();
-
-						ListViewItem lvi1 = new ListViewItem("Current: " + _game.Score);
+						
+						ListViewItem lvi1 = new ListViewItem(string.Format(Properties.Resources.CurrentScore, _game.Score));
 						HighScoreList.Items.Add(lvi1);
 
 						var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
@@ -148,7 +148,7 @@ namespace Clickmania
 			_game.AddPoints(1);
 			HighScoreList.Items.Clear();
 
-			ListViewItem lvi1 = new ListViewItem("Current: " + _game.Score);
+			ListViewItem lvi1 = new ListViewItem(string.Format(Properties.Resources.CurrentScore, _game.Score));
 			HighScoreList.Items.Add(lvi1);
 
 			var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));

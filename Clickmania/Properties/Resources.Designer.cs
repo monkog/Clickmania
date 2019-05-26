@@ -61,6 +61,15 @@ namespace Clickmania.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current score: {0}.
+        /// </summary>
+        internal static string CurrentScore {
+            get {
+                return ResourceManager.GetString("CurrentScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Congratulations! You won!.
         /// </summary>
         internal static string GameWon {
