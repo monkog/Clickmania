@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Clickmania
@@ -10,7 +11,6 @@ namespace Clickmania
 		private Board _board;
 		private int _score;
 		private readonly List<int[]> _indexes = new List<int[]>();
-		private readonly List<string> _scoreList = new List<string>();
 		private bool[,] _visited;
 
 		public GameWindow()
@@ -29,7 +29,7 @@ namespace Clickmania
 
 			if (_score != 0)
 			{
-				_scoreList.Add(_score + "/" + GameBoard.RowCount * GameBoard.ColumnCount);
+				HighScoreRegistry.AddHighScore(_score, GameBoard.RowCount * GameBoard.ColumnCount);
 				_score = 0;
 			}
 
@@ -90,11 +90,8 @@ namespace Clickmania
 				ListViewItem lvi1 = new ListViewItem("Current: " + _score);
 				HighScoreList.Items.Add(lvi1);
 
-				for (int i = _scoreList.Count - 1; i >= 0; i--)
-				{
-					ListViewItem lvi = new ListViewItem(_scoreList[i]);
-					HighScoreList.Items.Add(lvi);
-				}
+				var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
+				HighScoreList.Items.AddRange(highScores.ToArray());
 
 				Game_Over();
 			}
@@ -140,11 +137,8 @@ namespace Clickmania
 							ListViewItem lvi1 = new ListViewItem("Current: " + _score);
 							HighScoreList.Items.Add(lvi1);
 
-							for (int i = _scoreList.Count - 1; i >= 0; i--)
-							{
-								ListViewItem lvi = new ListViewItem(_scoreList[i]);
-								HighScoreList.Items.Add(lvi);
-							}
+							var highScores = HighScoreRegistry.GetAllRecords().Select(score => new ListViewItem(score));
+							HighScoreList.Items.AddRange(highScores.ToArray());
 
 						}
 					}
