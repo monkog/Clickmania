@@ -1,33 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        private int[,] _board;
-        int colourNumber = 5;
-        Color[] colourTab = { Color.Blue, Color.Green, Color.Crimson, Color.Cyan, Color.Gray, Color.Indigo, Color.Navy, Color.HotPink, Color.Red, Color.Yellow };
-        int height = 5;
-        int width = 5;
-        private Random _random = new Random();
-        int score = 0;
-        private List<int[]> indexes = new List<int[]>();
-        private List<string> scoreList;
-        bool[,] visited;
+        int _colorNumber = 5;
+	    readonly Color[] _colorTab = { Color.Blue, Color.Green, Color.Crimson, Color.Cyan, Color.Gray, Color.Indigo, Color.Navy, Color.HotPink, Color.Red, Color.Yellow };
+        int _height = 5;
+        int _width = 5;
+	    int _score = 0;
+        private readonly List<int[]> _indexes;
+        private readonly List<string> _scoreList;
+        bool[,] _visited;
 
         public Form1()
         {
             InitializeComponent();
-            _board = new int[5, 5];
-            indexes = new List<int[]>();
-            scoreList = new List<string>();
+            _indexes = new List<int[]>();
+            _scoreList = new List<string>();
             listView.Visible = false;
             TLP.Width = this.Width;
             StartGame();
@@ -35,40 +28,40 @@ namespace WindowsFormsApplication1
 
         private void StartGame()
         {
-            if (score != 0)
+            if (_score != 0)
             {
-                scoreList.Add(score + "/" + TLP.RowCount * TLP.ColumnCount);
-                score = 0;
+                _scoreList.Add(_score + "/" + TLP.RowCount * TLP.ColumnCount);
+                _score = 0;
             }
 
             TLP.Controls.Clear();
             TLP.ColumnStyles.Clear();
             TLP.RowStyles.Clear();
             TLP.AutoSize = true;
-            TLP.ColumnCount = width;
-            TLP.RowCount = height;
+            TLP.ColumnCount = _width;
+            TLP.RowCount = _height;
             Random rnd = new Random();
-            visited = new bool[width, height];
+            _visited = new bool[_width, _height];
 
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                    visited[i, j] = false;
+            for (int i = 0; i < _width; i++)
+                for (int j = 0; j < _height; j++)
+                    _visited[i, j] = false;
 
             for (int i = 0; i < TLP.RowCount; ++i)
             {
-                TLP.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / height));
-                TLP.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / width));
+                TLP.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)100.0 / _height));
+                TLP.RowStyles.Add(new RowStyle(SizeType.Percent, (float)100.0 / _width));
 
                 for (int j = 0; j < TLP.ColumnCount; ++j)
                 {
                     var pctrCard = new PictureBox
                     {
                         Tag = new Point(j, i),
-                        BackColor = colourTab[rnd.Next() % colourNumber],
+                        BackColor = _colorTab[rnd.Next() % _colorNumber],
                         Margin = new Padding(0),
                         SizeMode = PictureBoxSizeMode.Zoom,
                         Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                        ClientSize = new Size(TLP.Size.Width / width, TLP.Size.Height / height)
+                        ClientSize = new Size(TLP.Size.Width / _width, TLP.Size.Height / _height)
                     };
                     pctrCard.Click += pctrCard_Click;
 
@@ -93,15 +86,15 @@ namespace WindowsFormsApplication1
 
                 Control con = TLP.GetControlFromPosition(p.X, 0);
                 con.BackColor = SystemColors.Control;
-                score++;
+                _score++;
                 listView.Items.Clear();
 
-                ListViewItem lvi1 = new ListViewItem("Current: " + score);
+                ListViewItem lvi1 = new ListViewItem("Current: " + _score);
                 listView.Items.Add(lvi1);
 
-                for (int i = scoreList.Count - 1; i >= 0; i--)
+                for (int i = _scoreList.Count - 1; i >= 0; i--)
                 {
-                    ListViewItem lvi = new ListViewItem(scoreList[i]);
+                    ListViewItem lvi = new ListViewItem(_scoreList[i]);
                     listView.Items.Add(lvi);
                 }
 
@@ -113,12 +106,12 @@ namespace WindowsFormsApplication1
 
                 if (con.BackColor != SystemColors.Control)
                 {
-                    check(p.X, p.Y, c.BackColor);
-                    if (indexes.Count > 1)
+                    Check(p.X, p.Y, c.BackColor);
+                    if (_indexes.Count > 1)
                     {
-                        for (int i = 0; i < indexes.Count; i++)
+                        for (int i = 0; i < _indexes.Count; i++)
                         {
-                            int[] tab = indexes[i];
+                            int[] tab = _indexes[i];
                             TLP.GetControlFromPosition(tab[0], tab[1]).BackColor = SystemColors.Control;
                         }
                         for (int i = TLP.RowCount - 1; i > 0; i--)
@@ -140,51 +133,51 @@ namespace WindowsFormsApplication1
                                         }
                                 }
                         }
-                        if (indexes.Count > 1)
+                        if (_indexes.Count > 1)
                         {
-                            score = score + indexes.Count;
+                            _score = _score + _indexes.Count;
 
                             listView.Items.Clear();
 
-                            ListViewItem lvi1 = new ListViewItem("Current: " + score);
+                            ListViewItem lvi1 = new ListViewItem("Current: " + _score);
                             listView.Items.Add(lvi1);
 
-                            for (int i = scoreList.Count - 1; i >= 0; i--)
+                            for (int i = _scoreList.Count - 1; i >= 0; i--)
                             {
-                                ListViewItem lvi = new ListViewItem(scoreList[i]);
+                                ListViewItem lvi = new ListViewItem(_scoreList[i]);
                                 listView.Items.Add(lvi);
                             }
 
                         }
                     }
-                    indexes.Clear();
-                    for (int i = 0; i < width; i++)
-                        for (int j = 0; j < height; j++)
-                            visited[i, j] = false;
+                    _indexes.Clear();
+                    for (int i = 0; i < _width; i++)
+                        for (int j = 0; j < _height; j++)
+                            _visited[i, j] = false;
                 }
 
                 Game_Over();
             }
         }
 
-        private void check(int x, int y, Color c)
+        private void Check(int x, int y, Color c)
         {
             Control con2 = TLP.GetControlFromPosition(x, y);
             if (c == con2.BackColor)
             {
-                visited[x, y] = true;
+                _visited[x, y] = true;
                 int[] tab = new int[2];
                 tab[0] = x;
                 tab[1] = y;
-                indexes.Add(tab);
-                if (x > 0 && visited[x - 1, y] == false)
-                    check(x - 1, y, c);
-                if (y > 0 && visited[x, y - 1] == false)
-                    check(x, y - 1, c);
-                if (x < TLP.ColumnCount - 1 && visited[x + 1, y] == false)
-                    check(x + 1, y, c);
-                if (y < TLP.RowCount - 1 && visited[x, y + 1] == false)
-                    check(x, y + 1, c);
+                _indexes.Add(tab);
+                if (x > 0 && _visited[x - 1, y] == false)
+                    Check(x - 1, y, c);
+                if (y > 0 && _visited[x, y - 1] == false)
+                    Check(x, y - 1, c);
+                if (x < TLP.ColumnCount - 1 && _visited[x + 1, y] == false)
+                    Check(x + 1, y, c);
+                if (y < TLP.RowCount - 1 && _visited[x, y + 1] == false)
+                    Check(x, y + 1, c);
             }
         }
 
@@ -200,52 +193,48 @@ namespace WindowsFormsApplication1
 
         private void x5ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _board = new int[5, 5];
-            width = 5;
-            height = 5;
+            _width = 5;
+            _height = 5;
             StartGame();
         }
 
         private void trackBar_ValueChanged(object sender, EventArgs e)
         {
-            colourNumber = trackBar.Value;
+            _colorNumber = trackBar.Value;
             StartGame();
         }
 
         private void x10ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _board = new int[10, 10];
-            width = 10;
-            height = 10;
+            _width = 10;
+            _height = 10;
             StartGame();
         }
 
         private void x10ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            _board = new int[5, 10];
-            width = 5;
-            height = 10;
+            _width = 5;
+            _height = 10;
             StartGame();
         }
 
         private void x5ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            _board = new int[10, 5];
-            width = 10;
-            height = 5;
+            _width = 10;
+            _height = 5;
             StartGame();
         }
 
         private void radioButtonH_CheckedChanged(object sender, EventArgs e)
         {
             listView.Visible = true;
-            TLP.Width = this.Width - listView.Width;
+            TLP.Width = Width - listView.Width;
         }
 
         private void radioButtonC_CheckedChanged(object sender, EventArgs e)
         {
             listView.Visible = false;
-            TLP.Width = this.Width;
+            TLP.Width = Width;
         }
     }
 }
