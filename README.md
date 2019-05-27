@@ -1,4 +1,5 @@
-https://ci.appveyor.com/api/projects/status/gp7wo49in4tbfkuq?svg=true
+
+[![Build status](https://ci.appveyor.com/api/projects/status/gp7wo49in4tbfkuq?svg=true)](https://ci.appveyor.com/project/monkog/same-game)
 
 ## :video_game: SameGame
 
