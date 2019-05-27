@@ -1,4 +1,4 @@
-﻿namespace Clickmania
+﻿namespace SameGame
 {
     partial class GameWindow
     {

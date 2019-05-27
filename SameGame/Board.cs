@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Clickmania
+namespace SameGame
 {
 	public class Board
 	{

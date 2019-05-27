@@ -8,8 +8,8 @@
     <ProjectGuid>{8E9E9635-F404-40E2-A8DE-2ABA183A1803}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClickmaniaTests</RootNamespace>
-    <AssemblyName>ClickmaniaTests</AssemblyName>
+    <RootNamespace>SameGameTests</RootNamespace>
+    <AssemblyName>SameGameTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Clickmania\Clickmania.csproj">
+    <ProjectReference Include="..\SameGame\SameGame.csproj">
       <Project>{c99d6591-69e7-4a3a-a2fb-16d2c979829b}</Project>
-      <Name>Clickmania</Name>
+      <Name>SameGame</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

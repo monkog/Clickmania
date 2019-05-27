@@ -1,7 +1,7 @@
-﻿using Clickmania;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using SameGame;
 
-namespace ClickmaniaTests
+namespace SameGameTests
 {
 	[TestFixture]
 	public class BoardTests
@@ -37,8 +37,7 @@ namespace ClickmaniaTests
 		[Test]
 		public void RemoveField_AllFields_AllFieldsRemoved()
 		{
-			_unitUnderTest.RemoveField();
-			_unitUnderTest.RemoveField();
+			_unitUnderTest.RemoveFields(2);
 
 			Assert.IsTrue(_unitUnderTest.AllFieldsRemoved);
 		}

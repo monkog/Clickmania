@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Clickmania;
 using NUnit.Framework;
+using SameGame;
 
-namespace ClickmaniaTests
+namespace SameGameTests
 {
 	[TestFixture]
 	public class HighScoreRegistryTests

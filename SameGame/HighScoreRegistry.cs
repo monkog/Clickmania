@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Clickmania
+namespace SameGame
 {
 	public static class HighScoreRegistry
 	{

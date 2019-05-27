@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Clickmania.Properties {
+namespace SameGame.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clickmania", "Clickmania\Clickmania.csproj", "{C99D6591-69E7-4A3A-A2FB-16D2C979829B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SameGame", "SameGame\SameGame.csproj", "{C99D6591-69E7-4A3A-A2FB-16D2C979829B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickmaniaTests", "ClickmaniaTests\ClickmaniaTests.csproj", "{8E9E9635-F404-40E2-A8DE-2ABA183A1803}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SameGameTests", "SameGameTests\SameGameTests.csproj", "{8E9E9635-F404-40E2-A8DE-2ABA183A1803}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

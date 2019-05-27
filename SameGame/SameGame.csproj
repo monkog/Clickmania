@@ -8,8 +8,8 @@
     <ProjectGuid>{C99D6591-69E7-4A3A-A2FB-16D2C979829B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Clickmania</RootNamespace>
-    <AssemblyName>Clickmania</AssemblyName>
+    <RootNamespace>SameGame</RootNamespace>
+    <AssemblyName>SameGame</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

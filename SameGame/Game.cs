@@ -1,4 +1,4 @@
-﻿namespace Clickmania
+﻿namespace SameGame
 {
 	public class Game
 	{

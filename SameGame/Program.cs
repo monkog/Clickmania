@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Clickmania
+namespace SameGame
 {
     static class Program
     {
