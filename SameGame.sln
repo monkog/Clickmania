@@ -15,20 +15,22 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|x86.ActiveCfg = Debug|x86
-		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|x86.Build.0 = Debug|x86
-		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|Any CPU.ActiveCfg = Release|x86
-		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|x86.ActiveCfg = Release|x86
-		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|x86.Build.0 = Release|x86
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Debug|x86.Build.0 = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|x86.ActiveCfg = Debug|Any CPU
+		{C99D6591-69E7-4A3A-A2FB-16D2C979829B}.Release|x86.Build.0 = Debug|Any CPU
 		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Debug|x86.Build.0 = Debug|Any CPU
-		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|x86.ActiveCfg = Release|Any CPU
-		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|x86.Build.0 = Release|Any CPU
+		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|x86.ActiveCfg = Debug|Any CPU
+		{8E9E9635-F404-40E2-A8DE-2ABA183A1803}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
