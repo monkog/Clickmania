@@ -63,47 +63,38 @@ namespace Clickmania
 			var row = control.TabIndex / _game.Board.Columns;
 			var column = control.TabIndex % _game.Board.Columns;
 
-			if (_game.IsEasyVersion && control.BackColor != SystemColors.Control)
+			if (control.BackColor == SystemColors.Control) return;
+
+			if (_game.IsEasyVersion)
 			{
-				RemoveFieldInEasyVersion(row, column);
+				RemoveControlsInColumn(column, row);
+				UpdateHighScoreList();
 			}
 			else
 			{
-				RemoveFieldInHardVersion(column, row);
+				RemoveFieldInHardVersion(column, row, control);
 			}
+
+			CheckIsGameOver();
 		}
 
-		private void RemoveFieldInHardVersion(int c, int row)
+		private void RemoveFieldInHardVersion(int c, int row, Control control)
 		{
-			var currentControl = GameBoard.GetControlFromPosition(c, row);
+			Check(c, row, control.BackColor);
 
-			if (currentControl.BackColor != SystemColors.Control)
+			if (_indexes.Count > 1)
 			{
-				Check(c, row, currentControl.BackColor);
-
-				if (_indexes.Count > 1)
+				var columns = _indexes.GroupBy(i => i[0], i => i[1]);
+				foreach (var column in columns)
 				{
-					var columns = _indexes.GroupBy(i => i[0], i => i[1]);
-					foreach (var column in columns)
-					{
-						RemoveControlsInColumn(column.Key, column.ToArray());
-					}
-
-					UpdateHighScoreList();
+					RemoveControlsInColumn(column.Key, column.ToArray());
 				}
 
-				_indexes.Clear();
-				_visited = new bool[_game.Board.Columns, _game.Board.Rows];
+				UpdateHighScoreList();
 			}
 
-			CheckIsGameOver();
-		}
-
-		private void RemoveFieldInEasyVersion(int row, int column)
-		{
-			RemoveControlsInColumn(column, row);
-			UpdateHighScoreList();
-			CheckIsGameOver();
+			_indexes.Clear();
+			_visited = new bool[_game.Board.Columns, _game.Board.Rows];
 		}
 
 		private void RemoveControlsInColumn(int column, params int[] rows)
