@@ -9,8 +9,6 @@ namespace Clickmania
 	public partial class GameWindow : Form
 	{
 		private Game _game;
-		private readonly List<int[]> _indexes = new List<int[]>();
-		private bool[,] _visited;
 
 		public GameWindow()
 		{
@@ -35,7 +33,6 @@ namespace Clickmania
 			GameBoard.AutoSize = true;
 			GameBoard.ColumnCount = _game.Board.Columns;
 			GameBoard.RowCount = _game.Board.Rows;
-			_visited = new bool[_game.Board.Columns, _game.Board.Rows];
 
 			for (var i = 0; i < GameBoard.RowCount; ++i)
 			{
@@ -78,23 +75,18 @@ namespace Clickmania
 			CheckIsGameOver();
 		}
 
-		private void RemoveFieldInHardVersion(int c, int row, Control control)
+		private void RemoveFieldInHardVersion(int column, int row, Control control)
 		{
-			Check(c, row, control.BackColor);
+			var neighbors = GetSameColorNeighbors(column, row, control.BackColor);
 
-			if (_indexes.Count > 1)
+			if (neighbors.Count <= 1) return;
+			var columns = neighbors.GroupBy(n => n.X, n => n.Y);
+			foreach (var c in columns)
 			{
-				var columns = _indexes.GroupBy(i => i[0], i => i[1]);
-				foreach (var column in columns)
-				{
-					RemoveControlsInColumn(column.Key, column.ToArray());
-				}
-
-				UpdateHighScoreList();
+				RemoveControlsInColumn(c.Key, c.ToArray());
 			}
 
-			_indexes.Clear();
-			_visited = new bool[_game.Board.Columns, _game.Board.Rows];
+			UpdateHighScoreList();
 		}
 
 		private void RemoveControlsInColumn(int column, params int[] rows)
@@ -128,25 +120,47 @@ namespace Clickmania
 			HighScoreList.Items.AddRange(highScores.ToArray());
 		}
 
-		private void Check(int x, int y, Color c)
+		private List<Point> GetSameColorNeighbors(int x, int y, Color color)
 		{
-			Control con2 = GameBoard.GetControlFromPosition(x, y);
-			if (c == con2.BackColor)
+			var startField = new Point(x, y);
+			var neighbors = new List<Point> { startField };
+			var visitedNeighbors = new List<Point> { startField };
+			var sameColorFields = new List<Point>();
+
+			while (neighbors.Any())
 			{
-				_visited[x, y] = true;
-				int[] tab = new int[2];
-				tab[0] = x;
-				tab[1] = y;
-				_indexes.Add(tab);
-				if (x > 0 && _visited[x - 1, y] == false)
-					Check(x - 1, y, c);
-				if (y > 0 && _visited[x, y - 1] == false)
-					Check(x, y - 1, c);
-				if (x < GameBoard.ColumnCount - 1 && _visited[x + 1, y] == false)
-					Check(x + 1, y, c);
-				if (y < GameBoard.RowCount - 1 && _visited[x, y + 1] == false)
-					Check(x, y + 1, c);
+				var currentField = neighbors.First();
+				neighbors.Remove(currentField);
+				sameColorFields.Add(currentField);
+
+				var currentNeighbors = new[]
+				{
+					new Point(currentField.X - 1, currentField.Y),
+					new Point(currentField.X, currentField.Y - 1),
+					new Point(currentField.X + 1, currentField.Y),
+					new Point(currentField.X, currentField.Y + 1)
+				};
+
+				foreach (var neighbor in currentNeighbors)
+				{
+					if (!CanVisitNeighbor(neighbor.X, neighbor.Y, color, visitedNeighbors)) continue;
+					neighbors.Add(neighbor);
+					visitedNeighbors.Add(neighbor);
+				}
 			}
+
+			return sameColorFields;
+		}
+
+		private bool CanVisitNeighbor(int x, int y, Color color, ICollection<Point> visitedNeighbors)
+		{
+			if (x < 0 || x >= GameBoard.ColumnCount || y < 0 || y >= GameBoard.RowCount) return false;
+
+			var currentField = new Point(x, y);
+			if (visitedNeighbors.Contains(currentField)) return false;
+
+			var fieldControl = GameBoard.GetControlFromPosition(x, y);
+			return fieldControl.BackColor == color;
 		}
 
 		private void CheckIsGameOver()
