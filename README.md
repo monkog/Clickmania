@@ -1,7 +1,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/gp7wo49in4tbfkuq?svg=true)](https://ci.appveyor.com/project/monkog/same-game)
 
-## :video_game: SameGame
+# :video_game: SameGame
 
 SameGame is also known as Clickomania or Chain Shot! It's a tile matching puzzle containing of a number of coloured blocks. The goal is to remove as many blocks as possible. Blocks can be removed when at least two of the same colors are next to each other.
 
